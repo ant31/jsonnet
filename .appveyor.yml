@@ -29,7 +29,9 @@ install:
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - "pip install setuptools>=6.0"
   - "python --version"
-  - "CXX=mingw64 CC=mingw64 python setup.py build"
+  - "SET CXX=mingw64"
+  - "SET CC=mingw64"
+  -  "%CMD_IN_ENV% CC=mingw64 python setup.py build"
   # # Upgrade to the latest version of pip to avoid it displaying warnings
   # # about it being out of date.
   # - "pip install --disable-pip-version-check --user --upgrade pip"
