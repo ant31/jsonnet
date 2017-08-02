@@ -1,8 +1,8 @@
 image:
 - Visual Studio 2015
 environment:
-  global:
-    CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_env.cmd"
+  global: {}
+    #CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_env.cmd"
   matrix:
 
     # For Python versions available on Appveyor, see
@@ -18,20 +18,25 @@ environment:
       BIN_NAME: appr-%APPVEYOR_REPO_TAG_NAME%-win-x64
       PYTHON_ARCH: "64"
       PYTHON_VERSION: "2.7.x"
+      CXX: "mingw32"
+      CC: "mingw32"
     # - PYTHON: "C:\\Python33-x64"
     # - PYTHON: "C:\\Python34-x64"
     # - PYTHON: "C:\\Python35-x64"
 
 install:
-  - ECHO "Installed SDKs:"
+  - "SET Path=C:\\MinGW\\bin;%Path%"
   - ps: "ls \"C:/Program Files/Microsoft SDKs/Windows\""
-
+  - ps: "ls \"C:/MinGW/bin/\""
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - "pip install setuptools>=6.0"
   - "python --version"
-  - "SET CXX=mingw64"
-  - "SET CC=mingw64"
-  -  "%CMD_IN_ENV% python setup.py build"
+  - "SET CXX=g++"
+  - "SET CC=gcc"
+  - "SET MAKE=mingw32-make"
+  - "g++ --version"
+  - "mingw32-make --version"
+  - "python setup.py build --debug --verbose --compiler=mingw32"
   # # Upgrade to the latest version of pip to avoid it displaying warnings
   # # about it being out of date.
   # - "pip install --disable-pip-version-check --user --upgrade pip"

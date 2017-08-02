@@ -48,11 +48,12 @@ def get_version():
 
 class BuildJsonnetExt(BuildExt):
     def run(self):
-        cmd = ['make']
+        makebin = os.getenv("MAKE", "make")
+        cmd = [makebin]
         for compiler_env in ['CXX', "CC"]:
             if os.getenv(compiler_env, None):
                 cmd = cmd + ['%s=%s' % (compiler_env, os.environ[compiler_env])]
-        p = Popen(['make'] + LIB_OBJECTS, cwd=DIR)
+        p = Popen(cmd + LIB_OBJECTS, cwd=DIR)
         p.wait()
         if p.returncode != 0:
             raise Exception('Could not build %s' % (', '.join(LIB_OBJECTS)))
