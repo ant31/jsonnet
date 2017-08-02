@@ -48,6 +48,10 @@ def get_version():
 
 class BuildJsonnetExt(BuildExt):
     def run(self):
+        cmd = ['make']
+        for compiler_env in ['CXX', "CC"]:
+            if os.getenv(compiler_env, None):
+                cmd = cmd + ['%s=%s' % (compiler_env, os.environ[compiler_env])]
         p = Popen(['make'] + LIB_OBJECTS, cwd=DIR)
         p.wait()
         if p.returncode != 0:
@@ -60,7 +64,7 @@ jsonnet_ext = Extension(
     extra_objects=LIB_OBJECTS,
     include_dirs = ['include', 'third_party/md5'],
     language='c++'
-)
+    )
 
 setup(name='jsonnet',
       url='https://jsonnet.org',
