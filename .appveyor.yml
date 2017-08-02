@@ -31,7 +31,7 @@ install:
   - "python --version"
   - "SET CXX=mingw64"
   - "SET CC=mingw64"
-  -  "%CMD_IN_ENV% CC=mingw64 python setup.py build"
+  -  "%CMD_IN_ENV% python setup.py build"
   # # Upgrade to the latest version of pip to avoid it displaying warnings
   # # about it being out of date.
   # - "pip install --disable-pip-version-check --user --upgrade pip"
